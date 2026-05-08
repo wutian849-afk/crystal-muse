@@ -174,6 +174,133 @@ function renderDashboard() {
   `).join('');
 }
 
+// ===== IMAGE UPLOAD (GitHub API) =====
+
+function getGithubConfig() {
+  const s = JSON.parse(localStorage.getItem('crystalMuseSettings') || '{}');
+  return {
+    token: s.githubToken || '',
+    repo: s.githubRepo || 'wutian849-afk/crystal-muse',
+    branch: s.githubBranch || 'main'
+  };
+}
+
+// Click upload area triggers file picker
+document.addEventListener('DOMContentLoaded', function() {
+  const uploadArea = document.getElementById('imageUploadArea');
+  if (uploadArea) {
+    uploadArea.addEventListener('click', function(e) {
+      // Don't trigger if clicking remove button or preview
+      if (e.target.closest('.btn-remove') || e.target.closest('.image-preview')) return;
+      document.getElementById('prodImageInput').click();
+    });
+  }
+
+  // Check if already logged in (session)
+  const hash = window.location.hash;
+  if (hash === '#autologin') {
+    document.getElementById('passwordInput').value = 'admin123';
+    login();
+  }
+});
+
+function handleImageSelect(event) {
+  const file = event.target.files[0];
+  if (!file) return;
+
+  // Validate file size (max 2MB)
+  if (file.size > 2 * 1024 * 1024) {
+    setUploadStatus('Image too large. Max 2MB.', 'error');
+    return;
+  }
+
+  // Show local preview immediately
+  const reader = new FileReader();
+  reader.onload = function(e) {
+    showImagePreview(e.target.result);
+    setUploadStatus('Uploading to GitHub...', 'uploading');
+    
+    // Upload to GitHub API
+    uploadImageToGithub(file);
+  };
+  reader.readAsDataURL(file);
+}
+
+function uploadImageToGithub(file) {
+  const config = getGithubConfig();
+  if (!config.token) {
+    setUploadStatus('⚠️ Set GitHub Token in Settings first', 'error');
+    return;
+  }
+
+  // Generate unique filename: timestamp_originalname
+  const timestamp = Date.now();
+  const safeName = file.name.replace(/[^a-zA-Z0-9._-]/g, '_');
+  const filename = timestamp + '_' + safeName;
+  const path = 'assets/' + filename;
+
+  // Read file as base64
+  const reader = new FileReader();
+  reader.onload = function(e) {
+    const base64Content = e.target.result.split(',')[1]; // Remove data: prefix
+
+    const body = {
+      message: 'Upload product image: ' + filename,
+      content: base64Content,
+      branch: config.branch
+    };
+
+    const url = `https://api.github.com/repos/${config.repo}/contents/${path}`;
+
+    fetch(url, {
+      method: 'PUT',
+      headers: {
+        'Authorization': 'token ' + config.token,
+        'Accept': 'application/vnd.github.v3+json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(body)
+    })
+    .then(res => {
+      if (!res.ok) return res.json().then(err => { throw new Error(err.message); });
+      return res.json();
+    })
+    .then(data => {
+      // Get raw URL from GitHub
+      const rawUrl = `https://raw.githubusercontent.com/${config.repo}/${config.branch}/${path}`;
+      document.getElementById('prodImage').value = rawUrl;
+      setUploadStatus('✅ Image uploaded to GitHub!', 'success');
+    })
+    .catch(err => {
+      console.error('Upload failed:', err);
+      setUploadStatus('❌ Upload failed: ' + err.message + '. Check Settings > GitHub Token.', 'error');
+    });
+  };
+  reader.readAsDataURL(file);
+}
+
+function showImagePreview(src) {
+  document.getElementById('uploadPlaceholder').style.display = 'none';
+  const preview = document.getElementById('imagePreview');
+  preview.style.display = 'block';
+  document.getElementById('previewImg').src = src;
+}
+
+function removeUploadedImage() {
+  document.getElementById('imagePreview').style.display = 'none';
+  document.getElementById('uploadPlaceholder').style.display = 'flex';
+  document.getElementById('prodImage').value = '';
+  document.getElementById('prodImageInput').value = '';
+  document.getElementById('uploadStatus').textContent = '';
+}
+
+function setUploadStatus(msg, type) {
+  const el = document.getElementById('uploadStatus');
+  if (!el) return;
+  el.textContent = msg;
+  el.className = 'upload-status' + (type ? ' ' + type : '');
+}
+
 // ===== PRODUCTS =====
 function renderProductsTable() {
   const tbody = document.getElementById('productsTable');
@@ -253,7 +380,13 @@ function editProduct(id) {
   document.getElementById('prodName').value = product.name;
   document.getElementById('prodPrice').value = product.price;
   document.getElementById('prodDesc').value = product.description;
-  document.getElementById('prodImage').value = product.image;
+  document.getElementById('prodImage').value = product.image; // Keep hidden field
+  // If product has an image URL, show it as preview
+  if (product.image) {
+    showImagePreview(product.image);
+  } else {
+    removeUploadedImage();
+  }
   document.getElementById('prodCategory').value = product.category || '';
   document.getElementById('prodSizes').value = (product.sizes || []).join(', ');
   document.getElementById('prodStock').value = product.stock || 0;
@@ -276,6 +409,7 @@ function resetProductForm() {
   document.getElementById('prodPrice').value = '';
   document.getElementById('prodDesc').value = '';
   document.getElementById('prodImage').value = '';
+  removeUploadedImage();
   document.getElementById('prodCategory').value = '';
   document.getElementById('prodSizes').value = 'S (6.5"), M (7"), L (7.5")';
   document.getElementById('prodStock').value = '20';
@@ -497,15 +631,6 @@ function showSettingsSuccess(msg) {
 }
 
 // Keyboard shortcut: Enter on login
-document.addEventListener('DOMContentLoaded', function() {
-  // Check if already logged in (session)
-  const hash = window.location.hash;
-  if (hash === '#autologin') {
-    document.getElementById('passwordInput').value = 'admin123';
-    login();
-  }
-});
-
 // Login on Enter key
 document.addEventListener('keydown', function(e) {
   if (e.key === 'Enter' && document.getElementById('loginScreen').style.display !== 'none') {
