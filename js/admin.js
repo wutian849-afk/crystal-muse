@@ -74,8 +74,22 @@ function loadLocalData() {
       githubRepo: '',
       githubBranch: 'main'
     };
-    localStorage.setItem('crystalMuseSettings', JSON.stringify(settings));
   }
+  // Try to load settings.json for GitHub token
+  fetch('../data/settings.json')
+    .then(r => r.json())
+    .then(fileSettings => {
+      if (fileSettings.githubToken) {
+        settings.githubToken = fileSettings.githubToken;
+        settings.githubRepo = fileSettings.githubRepo || settings.githubRepo;
+        settings.githubBranch = fileSettings.githubBranch || settings.githubBranch;
+      }
+      localStorage.setItem('crystalMuseSettings', JSON.stringify(settings));
+    })
+    .catch(() => {
+      // File settings not available, use what we have
+      localStorage.setItem('crystalMuseSettings', JSON.stringify(settings));
+    });
 
   // Load products from localStorage or defaults
   const storedProducts = localStorage.getItem('crystalMuseProducts');

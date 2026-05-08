@@ -1,0 +1,2 @@
+# Exclude settings with GitHub token
+data/settings.json
