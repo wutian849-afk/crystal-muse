@@ -268,7 +268,13 @@ function uploadImageToGithub(file) {
     .then(data => {
       // Get raw URL from GitHub
       const rawUrl = `https://raw.githubusercontent.com/${config.repo}/${config.branch}/${path}`;
-      document.getElementById('prodImage').value = rawUrl;
+      // Add to prodImages list
+      const el = document.getElementById('prodImages');
+      const existing = el.value ? JSON.parse(el.value) : [];
+      existing.push(rawUrl);
+      el.value = JSON.stringify(existing);
+      // Refresh preview
+      renderImagePreviews();
       setUploadStatus('✅ Image uploaded to GitHub!', 'success');
     })
     .catch(err => {
@@ -280,18 +286,41 @@ function uploadImageToGithub(file) {
 }
 
 function showImagePreview(src) {
-  document.getElementById('uploadPlaceholder').style.display = 'none';
-  const preview = document.getElementById('imagePreview');
-  preview.style.display = 'block';
-  document.getElementById('previewImg').src = src;
+  // Deprecated - keeping for compatibility
+  renderImagePreviews();
 }
 
 function removeUploadedImage() {
-  document.getElementById('imagePreview').style.display = 'none';
-  document.getElementById('uploadPlaceholder').style.display = 'flex';
-  document.getElementById('prodImage').value = '';
-  document.getElementById('prodImageInput').value = '';
-  document.getElementById('uploadStatus').textContent = '';
+  document.getElementById('prodImages').value = '';
+  renderImagePreviews();
+}
+
+function renderImagePreviews() {
+  const grid = document.getElementById('imagePreviewGrid');
+  const placeholder = document.getElementById('uploadPlaceholder');
+  if (!grid) return;
+  const el = document.getElementById('prodImages');
+  const urls = el.value ? JSON.parse(el.value) : [];
+  if (urls.length === 0) {
+    grid.innerHTML = '';
+    if (placeholder) placeholder.style.display = 'flex';
+    return;
+  }
+  if (placeholder) placeholder.style.display = 'none';
+  grid.innerHTML = urls.map((url, i) =>
+    `<div class="image-preview-item">
+      <img src="${url}" alt="Product image ${i+1}" onerror="this.parentElement.style.display='none'">
+      <button class="remove-btn" onclick="removeImageAtIndex(${i})">×</button>
+    </div>`
+  ).join('');
+}
+
+function removeImageAtIndex(index) {
+  const el = document.getElementById('prodImages');
+  const urls = el.value ? JSON.parse(el.value) : [];
+  urls.splice(index, 1);
+  el.value = JSON.stringify(urls);
+  renderImagePreviews();
 }
 
 function setUploadStatus(msg, type) {
@@ -331,8 +360,8 @@ function saveProduct() {
   const name = document.getElementById('prodName').value.trim();
   const price = parseFloat(document.getElementById('prodPrice').value);
   const desc = document.getElementById('prodDesc').value.trim();
-  const imgUrl = document.getElementById('prodImage').value.trim();
-  const allImages = imgUrl ? [imgUrl] : [];
+  const imagesField = document.getElementById('prodImages').value.trim();
+  const allImages = imagesField ? JSON.parse(imagesField) : [];
   const category = document.getElementById('prodCategory').value.trim();
   const sizesStr = document.getElementById('prodSizes').value.trim();
   const stock = parseInt(document.getElementById('prodStock').value) || 0;
@@ -381,13 +410,10 @@ function editProduct(id) {
   document.getElementById('prodName').value = product.name;
   document.getElementById('prodPrice').value = product.price;
   document.getElementById('prodDesc').value = product.description;
-  document.getElementById('prodImage').value = product.image; // Keep hidden field
-  // If product has an image URL, show it as preview
-  if (product.image) {
-    showImagePreview(product.image);
-  } else {
-    removeUploadedImage();
-  }
+  // Load product images into the hidden field and preview
+  const prodImages = product.images || (product.image ? [product.image] : []);
+  document.getElementById('prodImages').value = JSON.stringify(prodImages);
+  renderImagePreviews();
   document.getElementById('prodCategory').value = product.category || '';
   document.getElementById('prodSizes').value = (product.sizes || []).join(', ');
   document.getElementById('prodStock').value = product.stock || 0;
@@ -409,7 +435,7 @@ function resetProductForm() {
   document.getElementById('prodName').value = '';
   document.getElementById('prodPrice').value = '';
   document.getElementById('prodDesc').value = '';
-  document.getElementById('prodImage').value = '';
+  document.getElementById('prodImages').value = '';
   removeUploadedImage();
   document.getElementById('prodCategory').value = '';
   document.getElementById('prodSizes').value = 'S (6.5"), M (7"), L (7.5")';
