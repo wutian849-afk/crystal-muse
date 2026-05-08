@@ -1,0 +1,122 @@
+[
+  {
+    "id": 1,
+    "name": "Amethyst Harmony Bracelet",
+    "price": 34.99,
+    "description": "Hand-strung amethyst beads promote calm and spiritual awareness. Each bead is carefully selected for its deep purple hue and natural clarity. Perfect for meditation and stress relief.",
+    "image": "https://source.unsplash.com/400x400/?amethyst,crystal,bracelet",
+    "category": "Purple Crystals",
+    "sizes": ["S (6.5\")", "M (7\")", "L (7.5\")"],
+    "stock": 25
+  },
+  {
+    "id": 2,
+    "name": "Rose Quartz Love Bracelet",
+    "price": 29.99,
+    "description": "Open your heart to love with genuine rose quartz. The soft pink stones radiate unconditional love and emotional healing. A beautiful gift for yourself or a loved one.",
+    "image": "https://source.unsplash.com/400x400/?rose,quartz,crystal,jewelry",
+    "category": "Pink Crystals",
+    "sizes": ["S (6.5\")", "M (7\")", "L (7.5\")"],
+    "stock": 30
+  },
+  {
+    "id": 3,
+    "name": "Tiger's Eye Warrior Bracelet",
+    "price": 27.99,
+    "description": "Channel inner strength with golden-brown tiger's eye. Known for its protective and grounding properties, this bracelet helps you stay centered and confident throughout the day.",
+    "image": "https://source.unsplash.com/400x400/?tiger,eye,gemstone,bracelet",
+    "category": "Gold Crystals",
+    "sizes": ["S (6.5\")", "M (7\")", "L (7.5\")"],
+    "stock": 20
+  },
+  {
+    "id": 4,
+    "name": "Clear Quartz Clarity Bracelet",
+    "price": 24.99,
+    "description": "Master healer crystal that amplifies energy and intention. Clear quartz brings mental clarity, focus, and spiritual connection. A versatile essential for any crystal collection.",
+    "image": "https://source.unsplash.com/400x400/?clear,quartz,crystal,gemstone",
+    "category": "White Crystals",
+    "sizes": ["S (6.5\")", "M (7\")", "L (7.5\")"],
+    "stock": 35
+  },
+  {
+    "id": 5,
+    "name": "Lapis Lazuli Wisdom Bracelet",
+    "price": 39.99,
+    "description": "Deep blue lapis lazuli has been treasured since ancient times for wisdom and truth. This striking bracelet features rich ultramarine beads with golden pyrite flecks.",
+    "image": "https://source.unsplash.com/400x400/?lapis,lazuli,blue,gemstone",
+    "category": "Blue Crystals",
+    "sizes": ["S (6.5\")", "M (7\")", "L (7.5\")"],
+    "stock": 15
+  },
+  {
+    "id": 6,
+    "name": "Green Jade Prosperity Bracelet",
+    "price": 44.99,
+    "description": "Lucky green jade for abundance and prosperity. This smooth, polished bracelet is a traditional symbol of good fortune and harmonious energy flow.",
+    "image": "https://source.unsplash.com/400x400/?jade,green,gemstone,bracelet",
+    "category": "Green Crystals",
+    "sizes": ["S (6.5\")", "M (7\")", "L (7.5\")"],
+    "stock": 18
+  },
+  {
+    "id": 7,
+    "name": "Citrus Citrine Joy Bracelet",
+    "price": 32.99,
+    "description": "Warm golden citrine radiates positivity and manifesting energy. Known as the merchant's stone, it attracts abundance and joyful vibrations into your life.",
+    "image": "https://source.unsplash.com/400x400/?citrine,yellow,gemstone,crystal",
+    "category": "Gold Crystals",
+    "sizes": ["S (6.5\")", "M (7\")", "L (7.5\")"],
+    "stock": 22
+  },
+  {
+    "id": 8,
+    "name": "Selenite Moonlight Bracelet",
+    "price": 26.99,
+    "description": "Ethereal white selenite beads with a luminous, moonlit glow. This cleansing crystal clears negative energy and brings peaceful, calming vibrations to your space.",
+    "image": "https://source.unsplash.com/400x400/?selenite,white,crystal,stone",
+    "category": "White Crystals",
+    "sizes": ["S (6.5\")", "M (7\")", "L (7.5\")"],
+    "stock": 20
+  },
+  {
+    "id": 9,
+    "name": "Obsidian Shield Bracelet",
+    "price": 22.99,
+    "description": "Deep black obsidian for powerful protection. This volcanic glass creates a psychic shield against negativity while keeping you grounded and centered.",
+    "image": "https://source.unsplash.com/400x400/?obsidian,black,stone,jewelry",
+    "category": "Black Crystals",
+    "sizes": ["S (6.5\")", "M (7\")", "L (7.5\")"],
+    "stock": 28
+  },
+  {
+    "id": 10,
+    "name": "Carnelian Vitality Bracelet",
+    "price": 28.99,
+    "description": "Vibrant orange carnelian ignites your creative fire and boosts vitality. This motivational stone enhances courage, confidence, and passionate pursuit of your goals.",
+    "image": "https://source.unsplash.com/400x400/?carnelian,orange,gemstone,beads",
+    "category": "Orange Crystals",
+    "sizes": ["S (6.5\")", "M (7\")", "L (7.5\")"],
+    "stock": 16
+  },
+  {
+    "id": 11,
+    "name": "Sodalite Intuition Bracelet",
+    "price": 31.99,
+    "description": "Deep navy sodalite with white calcite veining enhances logic, intuition, and clear communication. Perfect for students, writers, and truth-seekers.",
+    "image": "https://source.unsplash.com/400x400/?sodalite,blue,mineral,bracelet",
+    "category": "Blue Crystals",
+    "sizes": ["S (6.5\")", "M (7\")", "L (7.5\")"],
+    "stock": 24
+  },
+  {
+    "id": 12,
+    "name": "Rainbow Moonstone Dream Bracelet",
+    "price": 36.99,
+    "description": "Iridescent moonstone with flashes of blue and rainbow light. This stone of new beginnings nurtures intuition, emotional balance, and divine feminine energy.",
+    "image": "https://source.unsplash.com/400x400/?moonstone,rainbow,gemstone,crystal",
+    "category": "White Crystals",
+    "sizes": ["S (6.5\")", "M (7\")", "L (7.5\")"],
+    "stock": 19
+  }
+]

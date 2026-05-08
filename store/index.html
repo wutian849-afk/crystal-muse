@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Crystal Muse — Healing Crystal Bracelets</title>
+  <meta name="description" content="Handcrafted crystal bracelets for healing, energy, and intention. Find your energy. Wear your intention.">
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><text y='28' font-size='28'>💎</text></svg>">
+</head>
+<body>
+  <!-- HEADER -->
+  <header class="site-header">
+    <div class="header-inner">
+      <a href="/" class="logo">Crystal <span>Muse</span></a>
+      <button class="mobile-menu-btn" onclick="toggleMobileMenu()" aria-label="Toggle menu">☰</button>
+      <ul class="nav-links" id="navLinks">
+        <li><a href="#products">Shop</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#footer">Contact</a></li>
+        <li>
+          <button class="cart-icon" onclick="openCart()" aria-label="Open cart">
+            🛒
+            <span class="cart-count" id="cartCount">0</span>
+          </button>
+        </li>
+      </ul>
+    </div>
+  </header>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-content">
+      <div class="hero-badge">✨ New Collection</div>
+      <h1>Find Your Energy.<br><span>Wear Your Intention.</span></h1>
+      <p>Handcrafted crystal bracelets, each infused with purpose. Discover the stone that speaks to your soul.</p>
+      <button class="hero-cta" onclick="document.getElementById('products').scrollIntoView({behavior:'smooth'})">
+        Shop Now ↓
+      </button>
+    </div>
+  </section>
+
+  <!-- PRODUCTS -->
+  <section class="products-section" id="products">
+    <div class="container">
+      <h2 class="section-title">Our Crystal Collection</h2>
+      <p class="section-subtitle">Each bracelet is hand-strung with intention and care</p>
+      <div class="products-grid" id="productGrid"></div>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section class="about-section" id="about">
+    <div class="container">
+      <div class="about-content">
+        <h2 class="section-title">The Crystal Muse Story</h2>
+        <p>
+          At <span class="highlight">Crystal Muse</span>, we believe every stone carries a story — and every story deserves to be worn.
+          Born from a passion for <span class="highlight">ancient healing traditions</span> and modern design,
+          our bracelets are carefully curated and hand-strung to bring you the highest quality crystals.
+        </p>
+        <p>
+          Whether you're seeking <span class="highlight">protection, clarity, love, or abundance</span>,
+          our collection offers a stone for every intention. Wear your energy. Live your truth.
+        </p>
+        <div class="about-values">
+          <div class="value-item">
+            <div class="icon">🌿</div>
+            <h4>Sustainably Sourced</h4>
+            <p>Ethically mined and traded crystals from trusted partners worldwide</p>
+          </div>
+          <div class="value-item">
+            <div class="icon">🤲</div>
+            <h4>Hand-Strung</h4>
+            <p>Each bracelet is handcrafted with care, intention, and positive energy</p>
+          </div>
+          <div class="value-item">
+            <div class="icon">💎</div>
+            <h4>Genuine Stones</h4>
+            <p>100% authentic natural gemstones — no dyed or synthetic materials</p>
+          </div>
+          <div class="value-item">
+            <div class="icon">✨</div>
+            <h4>Energy-Infused</h4>
+            <p>Every bracelet is cleansed under moonlight and charged with intention</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="site-footer" id="footer">
+    <div class="container">
+      <div class="footer-inner">
+        <div class="footer-col">
+          <h4>Crystal Muse</h4>
+          <p>Handcrafted healing crystal bracelets designed to align your energy and elevate your spirit. Find your energy. Wear your intention.</p>
+        </div>
+        <div class="footer-col">
+          <h4>Shop</h4>
+          <ul>
+            <li><a href="#products">All Bracelets</a></li>
+            <li><a href="#products">Purple Crystals</a></li>
+            <li><a href="#products">Gold Crystals</a></li>
+            <li><a href="#products">White Crystals</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Support</h4>
+          <ul>
+            <li><a href="#">Shipping Info</a></li>
+            <li><a href="#">Returns</a></li>
+            <li><a href="#">Crystal Care</a></li>
+            <li><a href="#">FAQ</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Connect</h4>
+          <ul>
+            <li><a href="#">📧 hello@crystalmuse.com</a></li>
+            <li><a href="#">📱 @crystalmuse</a></li>
+            <li><a href="#">📸 Instagram</a></li>
+            <li><a href="#">📘 Facebook</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2026 Crystal Muse. All rights reserved.</p>
+        <div class="footer-payments">
+          <span>💳</span>
+          <span>💵</span>
+          <span>🅿️</span>
+          <span>🔶</span>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- PRODUCT DETAIL MODAL -->
+  <div class="modal-overlay" id="productModal">
+    <div class="modal">
+      <div class="modal-content">
+        <button class="modal-close" onclick="closeModal()">✕</button>
+        <img class="modal-image" id="modalImage" src="" alt="">
+        <div class="modal-details">
+          <h2 id="modalName"></h2>
+          <div class="price" id="modalPrice"></div>
+          <p class="description" id="modalDesc"></p>
+          <label for="modalSize">Size</label>
+          <select id="modalSize"></select>
+          <label for="modalQty">Quantity</label>
+          <input type="number" id="modalQty" value="1" min="1" max="99">
+          <div class="modal-actions">
+            <button class="btn-primary" onclick="addFromModal()">Add to Cart</button>
+            <button class="btn-gold" onclick="buyNow()">Buy Now</button>
+          </div>
+          <div class="reviews-section">
+            <h4>Customer Reviews</h4>
+            <div class="review-item">
+              <div class="review-author">Sarah M. ⭐⭐⭐⭐⭐</div>
+              <div class="review-text">"Absolutely beautiful! The energy is real — I feel so centered wearing this."</div>
+            </div>
+            <div class="review-item">
+              <div class="review-author">Jessica L. ⭐⭐⭐⭐⭐</div>
+              <div class="review-text">"Bought this as a gift and she hasn't taken it off. Stunning quality."</div>
+            </div>
+            <div class="review-item">
+              <div class="review-author">Emma R. ⭐⭐⭐⭐</div>
+              <div class="review-text">"Lovely bracelet, true to size. The stones have a beautiful natural shimmer."</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CART DRAWER -->
+  <div class="cart-overlay" id="cartOverlay" onclick="closeCart()"></div>
+  <div class="cart-drawer" id="cartDrawer">
+    <div class="cart-header">
+      <h3>Your Cart</h3>
+      <button class="cart-close" onclick="closeCart()">✕</button>
+    </div>
+    <div class="cart-items" id="cartItems">
+      <div class="cart-empty">
+        <div class="empty-icon">🛒</div>
+        <p>Your cart is empty</p>
+        <p style="font-size:0.85rem;margin-top:8px;">Add some crystal energy to get started!</p>
+      </div>
+    </div>
+    <div class="cart-footer" id="cartFooter" style="display:none;">
+      <div class="cart-coupon">
+        <input type="text" id="couponInput" placeholder="Coupon code">
+        <button onclick="applyCoupon()">Apply</button>
+      </div>
+      <div class="cart-subtotal">
+        <span>Subtotal</span>
+        <span class="amount" id="cartSubtotal">$0.00</span>
+      </div>
+      <button class="cart-checkout-btn" onclick="checkout()">
+        Checkout with PayPal →
+      </button>
+    </div>
+  </div>
+
+  <!-- TOAST -->
+  <div class="toast" id="toast"></div>
+
+  <script src="../js/store.js"></script>
+</body>
+</html>
