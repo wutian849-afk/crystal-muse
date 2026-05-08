@@ -331,10 +331,8 @@ function saveProduct() {
   const name = document.getElementById('prodName').value.trim();
   const price = parseFloat(document.getElementById('prodPrice').value);
   const desc = document.getElementById('prodDesc').value.trim();
-  const imagesField = document.getElementById('prodImages').value.trim();
-  const images = imagesField ? JSON.parse(imagesField) : [];
-  const pImagesPending = pendingUploads.filter(function(p) { return p.url; }).map(function(p) { return p.url; });
-  const allImages = images.concat(pImagesPending.filter(function(u) { return images.indexOf(u) === -1; }));
+  const imgUrl = document.getElementById('prodImage').value.trim();
+  const allImages = imgUrl ? [imgUrl] : [];
   const category = document.getElementById('prodCategory').value.trim();
   const sizesStr = document.getElementById('prodSizes').value.trim();
   const stock = parseInt(document.getElementById('prodStock').value) || 0;
