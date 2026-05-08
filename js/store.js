@@ -30,20 +30,26 @@ async function loadData() {
   updateCartCount();
 }
 
+function getImage(p) {
+  if (p.images && p.images.length > 0) return p.images[0];
+  if (p.image) return p.image;
+  return "https://source.unsplash.com/400x400/?crystal,gemstone";
+}
+
 function getDefaultProducts() {
   return [
-    { id: 1, name: "Amethyst Harmony Bracelet", price: 34.99, description: "Hand-strung amethyst beads promote calm and spiritual awareness.", image: "https://source.unsplash.com/400x400/?amethyst,crystal,bracelet", category: "Purple Crystals", sizes: ['S (6.5")', 'M (7")', 'L (7.5")'], stock: 25 },
-    { id: 2, name: "Rose Quartz Love Bracelet", price: 29.99, description: "Open your heart to love with genuine rose quartz.", image: "https://source.unsplash.com/400x400/?rose,quartz,crystal,jewelry", category: "Pink Crystals", sizes: ['S (6.5")', 'M (7")', 'L (7.5")'], stock: 30 },
-    { id: 3, name: "Tiger's Eye Warrior Bracelet", price: 27.99, description: "Channel inner strength with golden-brown tiger's eye.", image: "https://source.unsplash.com/400x400/?tiger,eye,gemstone,bracelet", category: "Gold Crystals", sizes: ['S (6.5")', 'M (7")', 'L (7.5")'], stock: 20 },
-    { id: 4, name: "Clear Quartz Clarity Bracelet", price: 24.99, description: "Master healer crystal that amplifies energy and intention.", image: "https://source.unsplash.com/400x400/?clear,quartz,crystal,gemstone", category: "White Crystals", sizes: ['S (6.5")', 'M (7")', 'L (7.5")'], stock: 35 },
-    { id: 5, name: "Lapis Lazuli Wisdom Bracelet", price: 39.99, description: "Deep blue lapis lazuli for wisdom and truth.", image: "https://source.unsplash.com/400x400/?lapis,lazuli,blue,gemstone", category: "Blue Crystals", sizes: ['S (6.5")', 'M (7")', 'L (7.5")'], stock: 15 },
-    { id: 6, name: "Green Jade Prosperity Bracelet", price: 44.99, description: "Lucky green jade for abundance and prosperity.", image: "https://source.unsplash.com/400x400/?jade,green,gemstone,bracelet", category: "Green Crystals", sizes: ['S (6.5")', 'M (7")', 'L (7.5")'], stock: 18 },
-    { id: 7, name: "Citrus Citrine Joy Bracelet", price: 32.99, description: "Warm golden citrine radiates positivity.", image: "https://source.unsplash.com/400x400/?citrine,yellow,gemstone,crystal", category: "Gold Crystals", sizes: ['S (6.5")', 'M (7")', 'L (7.5")'], stock: 22 },
-    { id: 8, name: "Selenite Moonlight Bracelet", price: 26.99, description: "Ethereal white selenite with a luminous glow.", image: "https://source.unsplash.com/400x400/?selenite,white,crystal,stone", category: "White Crystals", sizes: ['S (6.5")', 'M (7")', 'L (7.5")'], stock: 20 },
-    { id: 9, name: "Obsidian Shield Bracelet", price: 22.99, description: "Deep black obsidian for powerful protection.", image: "https://source.unsplash.com/400x400/?obsidian,black,stone,jewelry", category: "Black Crystals", sizes: ['S (6.5")', 'M (7")', 'L (7.5")'], stock: 28 },
-    { id: 10, name: "Carnelian Vitality Bracelet", price: 28.99, description: "Vibrant orange carnelian ignites your creative fire.", image: "https://source.unsplash.com/400x400/?carnelian,orange,gemstone,beads", category: "Orange Crystals", sizes: ['S (6.5")', 'M (7")', 'L (7.5")'], stock: 16 },
-    { id: 11, name: "Sodalite Intuition Bracelet", price: 31.99, description: "Deep navy sodalite enhances logic and intuition.", image: "https://source.unsplash.com/400x400/?sodalite,blue,mineral,bracelet", category: "Blue Crystals", sizes: ['S (6.5")', 'M (7")', 'L (7.5")'], stock: 24 },
-    { id: 12, name: "Rainbow Moonstone Dream Bracelet", price: 36.99, description: "Iridescent moonstone with flashes of rainbow light.", image: "https://source.unsplash.com/400x400/?moonstone,rainbow,gemstone,crystal", category: "White Crystals", sizes: ['S (6.5")', 'M (7")', 'L (7.5")'], stock: 19 }
+    { id: 1, name: "Amethyst Harmony Bracelet", price: 34.99, description: "Hand-strung amethyst beads promote calm and spiritual awareness.", images: ["https://source.unsplash.com/400x400/?amethyst,crystal,bracelet"], category: "Purple Crystals", sizes: ['S (6.5")', 'M (7")', 'L (7.5")'], stock: 25 },
+    { id: 2, name: "Rose Quartz Love Bracelet", price: 29.99, description: "Open your heart to love with genuine rose quartz.", images: ["https://source.unsplash.com/400x400/?rose,quartz,crystal,jewelry"], category: "Pink Crystals", sizes: ['S (6.5")', 'M (7")', 'L (7.5")'], stock: 30 },
+    { id: 3, name: "Tiger's Eye Warrior Bracelet", price: 27.99, description: "Channel inner strength with golden-brown tiger's eye.", images: ["https://source.unsplash.com/400x400/?tiger,eye,gemstone,bracelet"], category: "Gold Crystals", sizes: ['S (6.5")', 'M (7")', 'L (7.5")'], stock: 20 },
+    { id: 4, name: "Clear Quartz Clarity Bracelet", price: 24.99, description: "Master healer crystal that amplifies energy and intention.", images: ["https://source.unsplash.com/400x400/?clear,quartz,crystal,gemstone"], category: "White Crystals", sizes: ['S (6.5")', 'M (7")', 'L (7.5")'], stock: 35 },
+    { id: 5, name: "Lapis Lazuli Wisdom Bracelet", price: 39.99, description: "Deep blue lapis lazuli for wisdom and truth.", images: ["https://source.unsplash.com/400x400/?lapis,lazuli,blue,gemstone"], category: "Blue Crystals", sizes: ['S (6.5")', 'M (7")', 'L (7.5")'], stock: 15 },
+    { id: 6, name: "Green Jade Prosperity Bracelet", price: 44.99, description: "Lucky green jade for abundance and prosperity.", images: ["https://source.unsplash.com/400x400/?jade,green,gemstone,bracelet"], category: "Green Crystals", sizes: ['S (6.5")', 'M (7")', 'L (7.5")'], stock: 18 },
+    { id: 7, name: "Citrus Citrine Joy Bracelet", price: 32.99, description: "Warm golden citrine radiates positivity.", images: ["https://source.unsplash.com/400x400/?citrine,yellow,gemstone,crystal"], category: "Gold Crystals", sizes: ['S (6.5")', 'M (7")', 'L (7.5")'], stock: 22 },
+    { id: 8, name: "Selenite Moonlight Bracelet", price: 26.99, description: "Ethereal white selenite with a luminous glow.", images: ["https://source.unsplash.com/400x400/?selenite,white,crystal,stone"], category: "White Crystals", sizes: ['S (6.5")', 'M (7")', 'L (7.5")'], stock: 20 },
+    { id: 9, name: "Obsidian Shield Bracelet", price: 22.99, description: "Deep black obsidian for powerful protection.", images: ["https://source.unsplash.com/400x400/?obsidian,black,stone,jewelry"], category: "Black Crystals", sizes: ['S (6.5")', 'M (7")', 'L (7.5")'], stock: 28 },
+    { id: 10, name: "Carnelian Vitality Bracelet", price: 28.99, description: "Vibrant orange carnelian ignites your creative fire.", images: ["https://source.unsplash.com/400x400/?carnelian,orange,gemstone,beads"], category: "Orange Crystals", sizes: ['S (6.5")', 'M (7")', 'L (7.5")'], stock: 16 },
+    { id: 11, name: "Sodalite Intuition Bracelet", price: 31.99, description: "Deep navy sodalite enhances logic and intuition.", images: ["https://source.unsplash.com/400x400/?sodalite,blue,mineral,bracelet"], category: "Blue Crystals", sizes: ['S (6.5")', 'M (7")', 'L (7.5")'], stock: 24 },
+    { id: 12, name: "Rainbow Moonstone Dream Bracelet", price: 36.99, description: "Iridescent moonstone with flashes of rainbow light.", images: ["https://source.unsplash.com/400x400/?moonstone,rainbow,gemstone,crystal"], category: "White Crystals", sizes: ['S (6.5")', 'M (7")', 'L (7.5")'], stock: 19 }
   ];
 }
 
@@ -70,7 +76,7 @@ function renderProducts() {
   if (!grid) return;
   grid.innerHTML = products.map(p => `
     <div class="product-card" onclick="openProductModal(${p.id})">
-      <img class="product-card-image" src="${p.image}" alt="${p.name}" loading="lazy"
+      <img class="product-card-image" src="${getImage(p)}" alt="${p.name}" loading="lazy"
            onerror="this.src='https://source.unsplash.com/400x400/?crystal,gemstone'">
       <div class="product-card-body">
         <div class="product-card-category">${p.category}</div>
@@ -103,7 +109,7 @@ function renderCart() {
 
   container.innerHTML = cart.map((item, i) => `
     <div class="cart-item">
-      <img class="cart-item-image" src="${item.image}" alt="${item.name}">
+      <img class="cart-item-image" src="${getImage(item)}" alt="${item.name}">
       <div class="cart-item-info">
         <div class="cart-item-name">${item.name}</div>
         <div class="cart-item-details">${item.size || 'M (7")'}</div>
@@ -157,7 +163,7 @@ function quickAdd(productId) {
       id: product.id,
       name: product.name,
       price: product.price,
-      image: product.image,
+      image: getImage(product),
       size: product.sizes ? product.sizes[1] : 'M (7")',
       qty: 1
     });
@@ -173,10 +179,24 @@ function openProductModal(productId) {
   if (!product) return;
   currentModalProduct = product;
 
-  document.getElementById('modalImage').src = product.image;
+  document.getElementById('modalImage').src = getImage(product);
   document.getElementById('modalImage').onerror = function() {
     this.src = 'https://source.unsplash.com/400x400/?crystal,gemstone';
   };
+
+  // Render image thumbnails for multi-image support
+  var allImages = product.images || (product.image ? [product.image] : []);
+  var thumbContainer = document.getElementById('modalThumbnails');
+  if (thumbContainer) {
+    if (allImages.length > 1) {
+      thumbContainer.innerHTML = allImages.map(function(url, idx) {
+        return '<div class="thumb' + (idx === 0 ? ' active' : '') + '" onclick="switchImage(this, \'' + url.replace(/'/g, "\\'") + '\')"><img src="' + url + '" alt="view ' + (idx+1) + '"></div>';
+      }).join('');
+      thumbContainer.style.display = 'flex';
+    } else {
+      thumbContainer.style.display = 'none';
+    }
+  }
   document.getElementById('modalName').textContent = product.name;
   document.getElementById('modalPrice').textContent = '$' + product.price.toFixed(2);
   document.getElementById('modalDesc').textContent = product.description;
@@ -188,6 +208,12 @@ function openProductModal(productId) {
 
   document.getElementById('productModal').classList.add('active');
   document.body.style.overflow = 'hidden';
+}
+
+function switchImage(el, url) {
+  document.getElementById('modalImage').src = url;
+  document.querySelectorAll('#modalThumbnails .thumb').forEach(function(t) { t.classList.remove('active'); });
+  if (el) el.classList.add('active');
 }
 
 function closeModal() {
@@ -209,7 +235,7 @@ function addFromModal() {
       id: currentModalProduct.id,
       name: currentModalProduct.name,
       price: currentModalProduct.price,
-      image: currentModalProduct.image,
+      image: getImage(currentModalProduct),
       size: size,
       qty: qty
     });
