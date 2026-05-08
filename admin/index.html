@@ -209,20 +209,15 @@
                 <textarea id="prodDesc" required></textarea>
               </div>
               <div class="form-group">
-                <label>Product Images</label>
-                <div class="image-upload-area" id="imageUploadArea">
-                  <div class="upload-placeholder" id="uploadPlaceholder">
-                    <span class="upload-icon">📸</span>
-                    <span>Click to upload images</span>
-                    <span class="upload-hint">PNG, JPG, WEBP — select multiple</span>
-                  </div>
-                  <div class="image-preview-grid" id="imagePreviewGrid">
-                    <!-- Uploaded image thumbnails appear here -->
-                  </div>
-                  <input type="file" id="prodImageInput" accept="image/png,image/jpeg,image/webp" multiple style="display:none;" onchange="handleImageSelect(event)">
-                  <input type="hidden" id="prodImages" value="">
+                <label>Product Images (URL)</label>
+                <div style="display:flex;gap:6px;margin-bottom:8px;">
+                  <input type="url" id="prodImageUrl" placeholder="https://example.com/image.jpg" style="flex:1;">
+                  <button type="button" class="btn-sm btn-edit" onclick="addImageUrl()">＋ Add</button>
                 </div>
-                <div class="upload-status" id="uploadStatus"></div>
+                <div class="image-preview-grid" id="imagePreviewGrid">
+                  <!-- Uploaded image thumbnails appear here -->
+                </div>
+                <input type="hidden" id="prodImages" value="">
               </div>
               <div class="form-group">
                 <label>Category</label>

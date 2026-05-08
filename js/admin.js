@@ -199,17 +199,8 @@ function getGithubConfig() {
   };
 }
 
-// Click upload area triggers file picker
+// ===== IMAGE URL MANAGEMENT =====
 document.addEventListener('DOMContentLoaded', function() {
-  const uploadArea = document.getElementById('imageUploadArea');
-  if (uploadArea) {
-    uploadArea.addEventListener('click', function(e) {
-      // Don't trigger if clicking remove button or preview
-      if (e.target.closest('.btn-remove') || e.target.closest('.image-preview')) return;
-      document.getElementById('prodImageInput').click();
-    });
-  }
-
   // Check if already logged in (session)
   const hash = window.location.hash;
   if (hash === '#autologin') {
@@ -218,89 +209,23 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 });
 
-function handleImageSelect(event) {
-  const file = event.target.files[0];
-  if (!file) return;
-
-  // Validate file size (max 2MB)
-  if (file.size > 2 * 1024 * 1024) {
-    setUploadStatus('Image too large. Max 2MB.', 'error');
+function addImageUrl() {
+  const urlInput = document.getElementById('prodImageUrl');
+  const url = urlInput.value.trim();
+  if (!url) { alert('Please enter an image URL'); return; }
+  if (!url.startsWith('http://') && !url.startsWith('https://')) {
+    alert('URL must start with http:// or https://');
     return;
   }
-
-  // Show local preview immediately
-  const reader = new FileReader();
-  reader.onload = function(e) {
-    showImagePreview(e.target.result);
-    setUploadStatus('Uploading to GitHub...', 'uploading');
-    
-    // Upload to GitHub API
-    uploadImageToGithub(file);
-  };
-  reader.readAsDataURL(file);
-}
-
-function uploadImageToGithub(file) {
-  const config = getGithubConfig();
-  if (!config.token) {
-    setUploadStatus('⚠️ Set GitHub Token in Settings first', 'error');
-    return;
-  }
-
-  // Generate unique filename: timestamp_originalname
-  const timestamp = Date.now();
-  const safeName = file.name.replace(/[^a-zA-Z0-9._-]/g, '_');
-  const filename = timestamp + '_' + safeName;
-  const path = 'assets/' + filename;
-
-  // Read file as base64
-  const reader = new FileReader();
-  reader.onload = function(e) {
-    const base64Content = e.target.result.split(',')[1]; // Remove data: prefix
-
-    const body = {
-      message: 'Upload product image: ' + filename,
-      content: base64Content,
-      branch: config.branch
-    };
-
-    const url = `https://api.github.com/repos/${config.repo}/contents/${path}`;
-
-    fetch(url, {
-      method: 'PUT',
-      headers: {
-        'Authorization': 'token ' + config.token,
-        'Accept': 'application/vnd.github.v3+json',
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(body)
-    })
-    .then(res => {
-      if (!res.ok) return res.json().then(err => { throw new Error(err.message); });
-      return res.json();
-    })
-    .then(data => {
-      // Get raw URL from GitHub
-      const rawUrl = `https://raw.githubusercontent.com/${config.repo}/${config.branch}/${path}`;
-      // Add to prodImages list
-      const el = document.getElementById('prodImages');
-      const existing = el.value ? JSON.parse(el.value) : [];
-      existing.push(rawUrl);
-      el.value = JSON.stringify(existing);
-      // Refresh preview
-      renderImagePreviews();
-      setUploadStatus('✅ Image uploaded to GitHub!', 'success');
-    })
-    .catch(err => {
-      console.error('Upload failed:', err);
-      setUploadStatus('❌ Upload failed: ' + err.message + '. Check Settings > GitHub Token.', 'error');
-    });
-  };
-  reader.readAsDataURL(file);
+  const el = document.getElementById('prodImages');
+  const existing = el.value ? JSON.parse(el.value) : [];
+  existing.push(url);
+  el.value = JSON.stringify(existing);
+  urlInput.value = '';
+  renderImagePreviews();
 }
 
 function showImagePreview(src) {
-  // Deprecated - keeping for compatibility
   renderImagePreviews();
 }
 
@@ -311,16 +236,13 @@ function removeUploadedImage() {
 
 function renderImagePreviews() {
   const grid = document.getElementById('imagePreviewGrid');
-  const placeholder = document.getElementById('uploadPlaceholder');
   if (!grid) return;
   const el = document.getElementById('prodImages');
   const urls = el.value ? JSON.parse(el.value) : [];
   if (urls.length === 0) {
-    grid.innerHTML = '';
-    if (placeholder) placeholder.style.display = 'flex';
+    grid.innerHTML = '<div style="color:var(--gray-500);font-size:0.9rem;padding:10px;">No images added. Paste a URL above and click ＋Add.</div>';
     return;
   }
-  if (placeholder) placeholder.style.display = 'none';
   grid.innerHTML = urls.map((url, i) =>
     `<div class="image-preview-item">
       <img src="${url}" alt="Product image ${i+1}" onerror="this.parentElement.style.display='none'">
